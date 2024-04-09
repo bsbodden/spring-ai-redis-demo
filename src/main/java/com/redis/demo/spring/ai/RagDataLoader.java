@@ -37,7 +37,7 @@ public class RagDataLoader implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		Map<String, Object> indexInfo = vectorStore.getJedis().ftInfo(properties.getIndex());
-		int numDocs = Integer.parseInt((String) indexInfo.getOrDefault("num_docs", "0"));
+		long numDocs = (long)indexInfo.getOrDefault("num_docs", "0");
 		if (numDocs > 20000) {
 			logger.info("Embeddings already loaded. Skipping");
 			return;

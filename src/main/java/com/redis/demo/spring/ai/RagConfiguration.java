@@ -9,21 +9,29 @@ import org.springframework.ai.vectorstore.RedisVectorStore.RedisVectorStoreConfi
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class RagConfiguration {
 
     @Bean
+    @Primary
     TransformersEmbeddingClient transformersEmbeddingClient() {
         return new TransformersEmbeddingClient(MetadataMode.EMBED);
     }
 
     @Bean
-    VectorStore vectorStore(TransformersEmbeddingClient embeddingClient, RedisVectorStoreProperties properties) {
-        var config = RedisVectorStoreConfig.builder().withURI(properties.getUri()).withIndexName(properties.getIndex())
-                .withPrefix(properties.getPrefix()).build();
+    VectorStore vectorStore(TransformersEmbeddingClient embeddingClient, //
+      RedisVectorStoreProperties properties) {
+        var config = RedisVectorStoreConfig.builder() //
+          .withURI(properties.getUri()) //
+          .withIndexName(properties.getIndex()) //
+          .withPrefix(properties.getPrefix()) //
+          .build();
+
         RedisVectorStore vectorStore = new RedisVectorStore(config, embeddingClient);
         vectorStore.afterPropertiesSet();
+
         return vectorStore;
     }
 

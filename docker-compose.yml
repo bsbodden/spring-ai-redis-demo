@@ -4,6 +4,8 @@ services:
   redis:
     image: redis/redis-stack-server
     hostname: redis
+    ports:
+      - "6379:6379"
   spring:
     build: .
     ports:
@@ -16,6 +18,4 @@ services:
         max_attempts: 10
     environment:
       - SPRING_AI_VECTORSTORE_REDIS_URI=redis://redis:6379
-      - SPRING_AI_AZURE_OPENAI_API_KEY=${SPRING_AI_AZURE_OPENAI_API_KEY}
-      - SPRING_AI_AZURE_OPENAI_CHAT_OPTIONS_MODEL=${SPRING_AI_AZURE_OPENAI_CHAT_OPTIONS_MODEL}
-      - SPRING_AI_AZURE_OPENAI_ENDPOINT=${SPRING_AI_AZURE_OPENAI_ENDPOINT}
+      - SPRING_AI_OPENAI_API_KEY=${SPRING_AI_OPENAI_API_KEY}

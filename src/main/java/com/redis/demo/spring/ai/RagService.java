@@ -50,8 +50,13 @@ public class RagService {
 	// end::retrieve[]
 
 	private Message getSystemMessage(List<Document> similarDocuments) {
-		String documents = similarDocuments.stream().map(Document::getContent).collect(Collectors.joining("\n"));
-		SystemPromptTemplate systemPromptTemplate = new SystemPromptTemplate(systemBeerPrompt);
+		String documents = similarDocuments.stream() //
+			.map(Document::getContent) //
+			.collect(Collectors.joining("\n"));
+
+		SystemPromptTemplate systemPromptTemplate = //
+			new SystemPromptTemplate(systemBeerPrompt);
+
 		return systemPromptTemplate.createMessage(Map.of("documents", documents));
 	}
 
